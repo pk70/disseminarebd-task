@@ -34,6 +34,5 @@
     </body>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    {{-- <script src="{{ asset('js/bootstrap.js.map') }}"></script> --}}
-    {{-- <script src="{{ asset('js/bootstrap.min.js.map') }}"></script> --}}
+    <script src="{{ asset('js/script.js') }}"></script>
 </html>

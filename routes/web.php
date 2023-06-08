@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/',[App\Http\Controllers\RegistrationController::class,'index'])->name('show-registration');
+Route::get('/district/{id?}',[App\Http\Controllers\RegistrationController::class,'getDistrict'])->name('get-district');
 
 Route::post('registration-store',[App\Http\Controllers\RegistrationController::class,'store'])->name('store-registration');
