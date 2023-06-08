@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('registration');
 });
+Route::post('registration-store',[App\Http\Controllers\RegistrationController::class,'store'])->name('store-registration');

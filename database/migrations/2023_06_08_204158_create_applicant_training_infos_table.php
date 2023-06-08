@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('applicant_training_infos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_applicant')->references('id')->on('applicants')->constrained()->cascadeOnDelete();
+            $table->string('training_name');
+            $table->string('details');
+            $table->timestamps();
+            $table->index('training_name');
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('applicant_training_infos');
+    }
+};
