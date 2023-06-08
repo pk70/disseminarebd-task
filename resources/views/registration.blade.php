@@ -22,9 +22,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputDivision" class="form-label">Division</label>
-                                    <select id="division" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>Dhaka</option>
+                                    <select id="division" name="division" class="form-select">
+                                        <option value="">Choose...</option>
+                                        @if ($divisions)
+                                            @foreach ($divisions as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-md-4">

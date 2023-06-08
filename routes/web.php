@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('registration');
-});
+
+Route::get('/',[App\Http\Controllers\RegistrationController::class,'index'])->name('show-registration');
+
 Route::post('registration-store',[App\Http\Controllers\RegistrationController::class,'store'])->name('store-registration');
