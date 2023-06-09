@@ -31,29 +31,34 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).parent().parent().remove();
         trainingCounter--;
-    })
+    });
+    //append education row
     $("#education_rowAdder").click(function(e) {
         e.preventDefault();
-        if (educationCounter > 10) {
-            alert('Only 10 field can be added');
+        if (educationCounter > 4) {
+            alert('Only 4 field can be added');
             return false;
         }
         let eduNewRow = '';
+        let examOption = '';
+        let universityOption = '';
+        let boardOption = '';
+        examOption = $('#exam').html();
+        universityOption = $('#university').html();
+        boardOption = $('#board').html();
+
         eduNewRow = '<tr>' +
             '<td>' +
             '<select id="exam" name="exam[]" class="form-select">' +
-            '<option selected>Choose...</option>' +
-            '<option>M.Sc</option>' +
+            examOption +
             '</select>' +
             '</td>' + '<td>' +
             '<select id="university" name="university[]" class="form-select">' +
-            '<option selected>Choose...</option>' +
-            '<option>Jagannatg</option>' +
+            universityOption +
             '</select>' +
             '</td>' + '<td>' +
             '<select id="board" name="board[]" class="form-select">' +
-            '<option selected>Choose...</option>' +
-            '<option>Chittagong</option>' +
+            boardOption +
             '</select>' +
             '</td>' + '<td>' +
             '<input type="text" class="form-control col-sm-3" id="result" name="result[]"></td>' +
@@ -73,41 +78,88 @@ $(document).ready(function() {
         $(this).parent().parent().remove();
         educationCounter--;
     });
-});
 
-$("#division").change(function() {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
+    //get the district by division id
+    $("#division").change(function() {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        const id_division = $(this).val();
+
+        if ($(this).val() == "") {
+            const id_division = null;
+        }
+
+
+        $.ajax({
+            type: "GET",
+            url: "/district/" + id_division,
+            // data: {
+            //     id: id_division,
+            // },
+            success: function(result) {
+                $("#district").empty();
+
+                if (result && result.status == "success") {
+                    $("#district").append('<option value="">Choose..</option>');
+                    $.each(result.data, function(key, value) {
+                        const district = '<option value="' + value.id + '"> ' + value.name + ' </option>';
+                        $("#district").append(district);
+                    });
+                }
+            },
+            error: function(result) {
+                console.log("error", result);
+            },
+        });
+    });
+    //get the thanas by district id
+    $("#district").change(function() {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        const id_district = $(this).val();
+
+        if ($(this).val() == "") {
+            const id_district = null;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "/thanas/" + id_district,
+
+            success: function(result) {
+                $("#thana_upo").empty();
+
+                if (result && result.status == "success") {
+                    $("#thana_upo").append('<option value="">Choose...</option>');
+                    $.each(result.data, function(key, value) {
+                        const thanas = '<option value="' + value.id + '"> ' + value.name + ' </option>';
+                        $("#thana_upo").append(thanas);
+                    });
+                }
+            },
+            error: function(result) {
+                console.log("error", result);
+            },
+        });
+    });
+    //showing training table by check switch
+    $("#training_enable").change(function() {
+        if ($(this).prop("checked") == true) {
+            $("#training_table").css("display", "");
+            $(this).val('yes');
+        } else {
+            $(this).val('no');
+            $("#training_table").css("display", "none");
+        }
+
     });
 
-    const id_division = $(this).val();
-
-    if ($(this).val() == "") {
-        const id_division = null;
-    }
-
-
-    $.ajax({
-        type: "GET",
-        url: "/district/" + id_division,
-        // data: {
-        //     id: id_division,
-        // },
-        success: function(result) {
-            $("#district").empty();
-
-            if (result && result.status == "success") {
-                console.log("succe", result);
-                $.each(result.data, function(key, value) {
-                    const district = '<option value="' + value.id + '"> ' + value.name + ' </option>';
-                    $("#district").append(district);
-                });
-            }
-        },
-        error: function(result) {
-            console.log("error", result);
-        },
-    });
 });

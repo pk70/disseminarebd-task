@@ -10,15 +10,15 @@
                             <h2> Registration form</h2>
                         </div>
                         <div class="card-body">
-                            <form class="row mb-3" method="post" action="{{ route('store-registration') }}">
+                            <form class="row mb-3" id="formDatas">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="col-md-6">
                                     <label for="inputApplicantName4" class="form-label">Applicant Name</label>
-                                    <input type="text" class="form-control" id="applicant_name">
+                                    <input type="text" class="form-control" id="applicant_name" name="applicant_name">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <input type="email" class="form-control" id="email" name="email">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputDivision" class="form-label">Division</label>
@@ -34,39 +34,38 @@
                                 <div class="col-md-4">
                                     <label for="inputDistrict" class="form-label">District</label>
                                     <select id="district" name="district" class="form-select">
-                                        <option>Choose division first</option>
+
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="inputThana" class="form-label">Upojila/Thana</label>
-                                    <select id="thana_upo" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>Sabujbag</option>
+                                    <select id="thana_upo" name="thana_upo" class="form-select">
+
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControladdressDetails" class="form-label">Address Details</label>
-                                    <textarea class="form-control" id="address_details" rows="3"></textarea>
+                                    <textarea class="form-control" id="address_details" name="address_details" rows="3"></textarea>
                                 </div>
                                 <div id="address_details" class="invalid-feedback">
                                     Please write address.
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="PHP" id="php_check">
+                                        <input class="form-check-input" type="checkbox" value="PHP" id="language_check" name="language_check[]">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             PHP
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="python_check"
+                                        <input class="form-check-input" type="checkbox" value="PYTHON" id="python_check" name="language_check[]"
                                             checked>
                                         <label class="form-check-label" for="flexCheckChecked">
                                             Python
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="java_check"
+                                        <input class="form-check-input" type="checkbox" value="JAVA" id="java_check" name="language_check[]"
                                             checked>
                                         <label class="form-check-label" for="flexCheckChecked">
                                             Java
@@ -90,19 +89,26 @@
                                                 <td scope="row">
                                                     <select id="exam" name="exam[]" class="form-select">
                                                         <option selected>Choose...</option>
-                                                        <option>M.Sc</option>
+                                                        @foreach ($exam as $item)
+                                                        <option>{{$item}}</option>
+                                                        @endforeach
+
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <select id="university" name="university[]" class="form-select">
                                                         <option selected>Choose...</option>
-                                                        <option>Jagannath University</option>
+                                                        @foreach ($university as $item)
+                                                        <option value="$item">{{ $item }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <select id="board" name="board[]" class="form-select">
                                                         <option selected>Choose...</option>
-                                                        <option>Dhaka Board</option>
+                                                        @foreach ($board as $item)
+                                                        <option value="$item">{{ $item }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
@@ -127,19 +133,19 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputThana" class="form-label">Applicant Photo</label>
-                                    <input type="file" class="form-control" id="image_file">
+                                    <input type="file" class="form-control" id="image_file" name="image_file">
                                 </div>
                                 <div class="col-md-6  mb-3">
                                     <label for="inputThana" class="form-label">Applicant Cv</label>
-                                    <input type="file" class="form-control" id="cv_file">
+                                    <input type="file" class="form-control" id="cv_file" name="cv_file">
                                 </div>
                                 <div class="col-md-12">
 
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                        <input class="form-check-input" type="checkbox" id="training_enable" name="training_enable" value="no">
                                         <label class="form-check-label" for="flexSwitchCheckDefault">Training</label>
                                     </div>
-                                    <table class="table" id="training_table">
+                                    <table class="table" id="training_table" style="display:none;">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Training Name</th>
@@ -178,7 +184,7 @@
                                 </div>
 
                                 <div class="col-12 mb-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" id="submit_form" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
 
