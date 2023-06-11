@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class ApplicantEducationalInfos extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id_applicant', 'exam_name','university', 'board','result'
+    ];
 }

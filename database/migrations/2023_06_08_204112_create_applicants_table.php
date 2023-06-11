@@ -16,14 +16,13 @@ return new class extends Migration
             $table->string('applicant_name');
             $table->string('email')->unique();
             $table->longText('address_details');
-            $table->enum('programming_language',['PHP','Python','Java']);
+            $table->json('programming_language');
             $table->enum('has_training',['yes','no']);
             $table->foreignId('id_division')->references('id')->on('divisions')->constrained()->cascadeOnDelete();
             $table->foreignId('id_district')->references('id')->on('districts')->constrained()->cascadeOnDelete();
             $table->foreignId('id_thana')->references('id')->on('thanas')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->index('applicant_name');
-            $table->index('programming_language');
         });
     }
 

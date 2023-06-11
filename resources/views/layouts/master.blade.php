@@ -16,11 +16,16 @@
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css.map') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css.map') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     </head>
     <body>
         <div class="wrapper">
-
+            <div id="overlay">
+                <div class="cv-spinner">
+                  <span class="spinner"></span>
+                </div>
+              </div>
             @include('top-bar')
 
             {{-- @include('side-bar') --}}
@@ -37,4 +42,6 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/submit.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 </html>

@@ -17,10 +17,8 @@ return new class extends Migration
             $table->string('exam_name');
             $table->string('university');
             $table->string('board');
+            $table->string('result');
             $table->timestamps();
-            $table->index('exam_name');
-            $table->index('university');
-            $table->index('board');
         });
     }
 

@@ -1,49 +1,43 @@
 $(document).ready(function() {
-    //get the district by division id
-    $("#submit_form").click(function() {
+
+    $("#formDatas").submit(function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        $("#overlay").fadeIn(300);　
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
         });
-        const formData = {
-            name: $("#applicant_name").val(),
-            email: $("#email").val(),
-            division: $("#division").val(),
-            district: $("#district").val(),
-            thana: $("#thana_upo").val(),
-            address_details: $("#address_details").val(),
-            language_check: $("input[name='language_check[]']").serialize(),
-            exam: $("select[name='exam[]']").serialize(),
-            university: $("select[name='university[]']").serialize(),
-            board: $("select[name='board[]']").serialize(),
-            result: $("select[name='result[]']").serialize(),
-            training_name: $("input[name='training_name[]']").serialize(),
-            training_details: $("input[name='training_details[]']").serialize(),
-            image_file: $("#image_file").val(),
-            cv_file: $("#cv_file").val(),
-            training_enable: $("#training_enable").val(),
-            //superheroAlias: $("#superheroAlias").val(),
-        };
-
-        //const formData = $('#formDatas').serialize();
-
-        console.log(formData);
 
         $.ajax({
             type: "POST",
             url: "registration-store",
-            data: {
-                formData,
-            },
+            data: formData,
+            processData: false,
+            contentType: false,
+
 
             success: function(result) {
-
-                if (result && result.status == "success") {
-
+                setTimeout(function() {
+                    $("#overlay").fadeOut(300);
+                }, 500);
+                $('.text-danger').html("");
+                if (result && result.success == true) {
+                    $(".success_entry").html('Successfully inserted');
+                    formData = "";
+                } else {
+                    $.each(result.error.details, function(key, value) {
+                        const keys = key.split('.')[0];
+                        // set the html of the id corresponding to the key to the value
+                        $('.' + keys).html(value[0]);
+                    });
                 }
             },
             error: function(result) {
+                setTimeout(function() {
+                    $("#overlay").fadeOut(300);
+                }, 500);
                 console.log("error", result);
             },
         });

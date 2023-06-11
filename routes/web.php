@@ -21,3 +21,7 @@ Route::get('/district/{id?}',[App\Http\Controllers\RegistrationController::class
 Route::get('/thanas/{id?}',[App\Http\Controllers\RegistrationController::class,'getThanas'])->name('get-thanas');
 //store applican information
 Route::post('registration-store',[App\Http\Controllers\RegistrationController::class,'store'])->name('store-registration');
+//get applicant list
+Route::get('/applicants-list',[App\Http\Controllers\RegistrationController::class,'list'])->name('list-applicant');
+//delete specefic applicant
+Route::get('/delete-applicant/{id}',[App\Http\Controllers\RegistrationController::class,'destroy'])->name('delete-applicant');
